@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
 import { TransactionsModule } from './transactions/transactions.module';
+import { AccountsModule } from './accounts/accounts.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { TransactionsModule } from './transactions/transactions.module';
       autoSchemaFile: `${process.cwd()}/src/schema.gql`,
     }),
     TransactionsModule,
+    AccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

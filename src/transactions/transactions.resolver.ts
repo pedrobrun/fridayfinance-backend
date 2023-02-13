@@ -20,7 +20,7 @@ export class TransactionsResolver {
     return this.transactionsService.findAll();
   }
 
-  @Query(() => Transaction, { name: 'transaction' })
+  @Query(() => Transaction, { name: 'transaction', nullable: true })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.transactionsService.findOne(id);
   }

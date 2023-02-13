@@ -17,15 +17,22 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Account {
+  id: String!
+  name: String!
+  bank: String!
+}
+
 type Query {
   transactions: [Transaction!]!
-  transaction(id: String!): Transaction!
+  transaction(id: String!): Transaction
+  accounts: [Account!]!
+  account(id: String!): Account
 }
 
 type Mutation {
-  createTransaction(
-    createTransactionInput: CreateTransactionInput!
-  ): Transaction!
+  createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
+  createAccount(createAccountInput: CreateAccountInput!): Account!
 }
 
 input CreateTransactionInput {
@@ -36,4 +43,10 @@ input CreateTransactionInput {
   amount: Float!
   currency: String!
   date: DateTime!
+}
+
+input CreateAccountInput {
+  id: String!
+  name: String!
+  bank: String!
 }
