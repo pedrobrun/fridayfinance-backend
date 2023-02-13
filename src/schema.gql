@@ -23,16 +23,25 @@ type Account {
   bank: String!
 }
 
+type Category {
+  id: String!
+  name: String!
+  color: String!
+}
+
 type Query {
   transactions: [Transaction!]!
   transaction(id: String!): Transaction
   accounts: [Account!]!
   account(id: String!): Account
+  categories: [Category!]!
+  category(id: String!): Category
 }
 
 type Mutation {
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   createAccount(createAccountInput: CreateAccountInput!): Account!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
 }
 
 input CreateTransactionInput {
@@ -49,4 +58,10 @@ input CreateAccountInput {
   id: String!
   name: String!
   bank: String!
+}
+
+input CreateCategoryInput {
+  id: String!
+  name: String!
+  color: String!
 }
