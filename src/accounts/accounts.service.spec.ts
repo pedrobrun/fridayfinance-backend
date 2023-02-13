@@ -21,4 +21,11 @@ describe('AccountsService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  describe('dependencies', () => {
+    it('should be defined', () => {
+      expect(repository).toBeDefined();
+      expect(prismaService).toBeDefined();
+    });
+  });
 });

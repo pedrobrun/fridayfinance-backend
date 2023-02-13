@@ -29,4 +29,12 @@ describe('AccountsResolver', () => {
   it('should be defined', () => {
     expect(resolver).toBeDefined();
   });
+
+  describe('dependencies', () => {
+    it('should be defined', () => {
+      expect(service).toBeDefined();
+      expect(repository).toBeDefined();
+      expect(prismaService).toBeDefined();
+    });
+  });
 });

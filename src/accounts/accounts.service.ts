@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AccountsRepository } from './accounts.repository';
 import { CreateAccountInput } from './dto/create-account.input';
-import { UpdateAccountInput } from './dto/update-account.input';
 
 @Injectable()
 export class AccountsService {
