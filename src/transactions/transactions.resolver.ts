@@ -2,6 +2,8 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { TransactionsService } from './transactions.service';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionInput } from './dto/create-transaction.input';
+import { PaginationInput } from 'src/shared/pagination.dto';
+import { FilterTransactionInput } from './dto/filter-transaction.input';
 
 @Resolver(() => Transaction)
 export class TransactionsResolver {
@@ -16,8 +18,16 @@ export class TransactionsResolver {
   }
 
   @Query(() => [Transaction], { name: 'transactions' })
-  findAll() {
-    return this.transactionsService.findAll();
+  findAll(
+    @Args('pagination')
+    paginationInput: PaginationInput,
+    @Args('filter', { nullable: true })
+    filterTransactionInput?: FilterTransactionInput,
+  ) {
+    return this.transactionsService.findAll(
+      paginationInput,
+      filterTransactionInput,
+    );
   }
 
   @Query(() => Transaction, { name: 'transaction', nullable: true })

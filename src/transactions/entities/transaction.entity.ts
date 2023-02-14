@@ -8,7 +8,7 @@ export class Transaction {
   @Field(() => String)
   accountId: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   categoryId: string;
 
   @Field(() => String, { nullable: true })

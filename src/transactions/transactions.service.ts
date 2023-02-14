@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { PaginationInput } from 'src/shared/pagination.dto';
 import { CreateTransactionInput } from './dto/create-transaction.input';
+import { FilterTransactionInput } from './dto/filter-transaction.input';
 import { TransactionsRepository } from './transactions.repository';
 
 @Injectable()
@@ -12,8 +14,14 @@ export class TransactionsService {
     return this.transactionsRepository.create(createTransactionInput);
   }
 
-  findAll() {
-    return this.transactionsRepository.findAll();
+  findAll(
+    paginationInput: PaginationInput,
+    filterTransactionInput: FilterTransactionInput,
+  ) {
+    return this.transactionsRepository.findAll(
+      paginationInput,
+      filterTransactionInput,
+    );
   }
 
   findOne(id: string) {

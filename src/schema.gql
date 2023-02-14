@@ -5,7 +5,7 @@
 type Transaction {
   id: String!
   accountId: String!
-  categoryId: String!
+  categoryId: String
   reference: String
   amount: Float!
   currency: String!
@@ -30,12 +30,25 @@ type Category {
 }
 
 type Query {
-  transactions: [Transaction!]!
+  transactions(pagination: PaginationInput!, filter: FilterTransactionInput): [Transaction!]!
   transaction(id: String!): Transaction
   accounts: [Account!]!
   account(id: String!): Account
   categories: [Category!]!
   category(id: String!): Category
+}
+
+input PaginationInput {
+  skip: Int! = 0
+  take: Int! = 25
+}
+
+input FilterTransactionInput {
+  accountId: String
+  categoryId: String
+  reference: String
+  startDate: DateTime
+  endDate: DateTime
 }
 
 type Mutation {
@@ -47,7 +60,7 @@ type Mutation {
 input CreateTransactionInput {
   id: String!
   accountId: String!
-  categoryId: String!
+  categoryId: String
   reference: String
   amount: Float!
   currency: String!

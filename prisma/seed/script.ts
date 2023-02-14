@@ -32,7 +32,7 @@ async function parseCsvFile(
   return objects;
 }
 
-export async function batchRequests(reqs, limit) {
+export async function batchCreateTransactions(reqs, limit) {
   for (let i = 0; i < reqs.length; i = i + limit) {
     const batch = reqs.slice(i, i + limit);
     await Promise.all(batch);
@@ -45,65 +45,73 @@ export async function batchRequests(reqs, limit) {
   }
 
   try {
+    console.log('Deleting old registers if they exist...');
     await prismaClient.category.deleteMany();
     await prismaClient.transaction.deleteMany();
     await prismaClient.account.deleteMany();
 
-    console.log('Deleted old registers...');
-
-    console.time('Seeding accounts ✅');
-    const accounts = await parseCsvFile('./data/accounts.csv', [
+    console.log('Seeding accounts...');
+    console.time('Seeded accounts ✅');
+    const accounts: Account[] = await parseCsvFile('./data/accounts.csv', [
       'id',
       'name',
       'bank',
     ]);
-    const accountPromises = accounts.map((account) => {
+    const accountPromises = accounts.map((account: Account) => {
       const newAccount = prismaClient.account.create({
         data: account,
       });
       return newAccount;
     });
     await Promise.all(accountPromises);
-    console.timeEnd('Seeding accounts ✅');
+    console.timeEnd('Seeded accounts ✅');
 
-    console.time('Seeding categories ✅');
-    const categories = await parseCsvFile('./data/categories.csv', [
+    console.log('Seeding categories...');
+    console.time('Seeded categories ✅');
+    const categories: Category[] = await parseCsvFile('./data/categories.csv', [
       'id',
       'name',
       'color',
     ]);
-    const categoriesPromises = categories.map((category) => {
+    const categoriesPromises = categories.map((category: Category) => {
       const newCategory = prismaClient.category.create({
         data: category,
       });
       return newCategory;
     });
     await Promise.all(categoriesPromises);
-    console.timeEnd('Seeding categories ✅');
+    console.timeEnd('Seeded categories ✅');
 
-    console.time('Seeding transactions ✅');
-    const transactions = await parseCsvFile('./data/transactions.csv', [
-      'id',
-      'accountId',
-      'categoryId',
-      'reference',
-      'amount',
-      'currency',
-      'date',
-    ]);
+    console.log('Seeding transactions...');
+    console.time('Seeded transactions ✅');
+    const transactions: Transaction[] = await parseCsvFile(
+      './data/transactions.csv',
+      [
+        'id',
+        'accountId',
+        'categoryId',
+        'reference',
+        'amount',
+        'currency',
+        'date',
+      ],
+    );
 
-    const transactionsPromises = transactions.map((transaction) => {
-      transaction.amount = Number(transaction.amount);
-      transaction.date = new Date(transaction.date);
-      transaction.categoryId = transaction.categoryId || null;
-      return prismaClient.transaction.create({
-        data: transaction,
-      });
-    });
-
-    await batchRequests(transactionsPromises, batchRequestsLimit);
-
-    console.timeEnd('Seeding transactions ✅');
+    const transactionsPromises = transactions.map(
+      (transaction: Transaction) => {
+        return prismaClient.transaction.create({
+          data: {
+            ...transaction,
+            amount: Number(transaction.amount),
+            date: new Date(transaction.date),
+            categoryId: transaction.categoryId || null,
+            reference: transaction.reference || null,
+          },
+        });
+      },
+    );
+    await batchCreateTransactions(transactionsPromises, batchRequestsLimit);
+    console.timeEnd('Seeded transactions ✅');
   } catch (e) {
     console.error('Error while seeding the database: ', e);
   }
