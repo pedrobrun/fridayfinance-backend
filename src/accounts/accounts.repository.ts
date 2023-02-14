@@ -12,6 +12,10 @@ export class AccountsRepository {
     });
   }
 
+  createMany(createAccountInputs: CreateAccountInput[]) {
+    return this.prismaService.account.createMany({ data: createAccountInputs });
+  }
+
   findAll() {
     return this.prismaService.account.findMany();
   }

@@ -10,6 +10,10 @@ export class AccountsService {
     return this.accountsRepository.create(createAccountInput);
   }
 
+  createMany(createAccountInputs: CreateAccountInput[]) {
+    return this.accountsRepository.createMany(createAccountInputs);
+  }
+
   findAll() {
     return this.accountsRepository.findAll();
   }
