@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { CategoriesService } from './categories.service';
 import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
+import { UpdateCategoryInput } from './dto/update-category.input';
 
 @Resolver(() => Category)
 export class CategoriesResolver {
@@ -22,5 +23,13 @@ export class CategoriesResolver {
   @Query(() => Category, { name: 'category', nullable: true })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.categoriesService.findOne(id);
+  }
+
+  @Mutation(() => Category)
+  updateOne(
+    @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
+    @Args('id', { type: () => String }) id: string,
+  ) {
+    return this.categoriesService.updateOne(id, updateCategoryInput);
   }
 }

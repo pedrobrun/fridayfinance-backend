@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCategoryInput } from './dto/create-category.input';
+import { UpdateCategoryInput } from './dto/update-category.input';
 
 @Injectable()
 export class CategoriesRepository {
@@ -16,5 +17,14 @@ export class CategoriesRepository {
 
   findOne(id: string) {
     return this.prismaService.category.findUnique({ where: { id } });
+  }
+
+  updateOne(id: string, updateCategoryInput: UpdateCategoryInput) {
+    return this.prismaService.category.update({
+      where: {
+        id,
+      },
+      data: updateCategoryInput,
+    });
   }
 }
