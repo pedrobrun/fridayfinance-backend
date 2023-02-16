@@ -4,6 +4,7 @@ import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { PaginationInput } from 'src/shared/pagination.dto';
 import { FilterTransactionInput } from './dto/filter-transaction.input';
+import { TransactionWithCategory } from './entities/transactions-with-categories.entity';
 
 @Resolver(() => Transaction)
 export class TransactionsResolver {
@@ -17,7 +18,7 @@ export class TransactionsResolver {
     return this.transactionsService.create(createTransactionInput);
   }
 
-  @Query(() => [Transaction], { name: 'transactions' })
+  @Query(() => [TransactionWithCategory], { name: 'transactions' })
   findAll(
     @Args('pagination')
     paginationInput: PaginationInput,

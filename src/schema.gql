@@ -17,20 +17,31 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Account {
-  id: String!
-  name: String!
-  bank: String!
-}
-
 type Category {
   id: String!
   name: String!
   color: String!
 }
 
+type TransactionWithCategory {
+  id: String!
+  accountId: String!
+  categoryId: String
+  reference: String
+  amount: Float!
+  currency: String!
+  date: DateTime!
+  category: Category
+}
+
+type Account {
+  id: String!
+  name: String!
+  bank: String!
+}
+
 type Query {
-  transactions(pagination: PaginationInput!, filter: FilterTransactionInput): [Transaction!]!
+  transactions(pagination: PaginationInput!, filter: FilterTransactionInput): [TransactionWithCategory!]!
   transaction(id: String!): Transaction
   accounts: [Account!]!
   account(id: String!): Account
@@ -55,6 +66,7 @@ type Mutation {
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
   createAccount(createAccountInput: CreateAccountInput!): Account!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateOne(updateCategoryInput: UpdateCategoryInput!, id: String!): Category!
 }
 
 input CreateTransactionInput {
@@ -75,6 +87,11 @@ input CreateAccountInput {
 
 input CreateCategoryInput {
   id: String!
+  name: String!
+  color: String!
+}
+
+input UpdateCategoryInput {
   name: String!
   color: String!
 }

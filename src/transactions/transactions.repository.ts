@@ -14,11 +14,11 @@ export class TransactionsRepository {
     });
   }
 
-  findAll(
+  async findAll(
     paginationInput: PaginationInput,
     filterTransactionInput: FilterTransactionInput,
   ) {
-    return this.prismaService.transaction.findMany({
+    const res = await this.prismaService.transaction.findMany({
       skip: paginationInput.skip,
       take: paginationInput.take,
       where: {
@@ -29,11 +29,16 @@ export class TransactionsRepository {
           mode: 'insensitive',
         },
         date: {
-          gte: filterTransactionInput.startDate,
-          lte: filterTransactionInput.endDate,
+          gte: filterTransactionInput?.startDate,
+          lte: filterTransactionInput?.endDate,
         },
       },
+      include: {
+        category: true,
+      },
     });
+    console.log(res);
+    return res;
   }
 
   findOne(id: string) {
