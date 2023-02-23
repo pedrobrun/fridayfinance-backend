@@ -18,7 +18,7 @@ export class TransactionsRepository {
     paginationInput: PaginationInput,
     filterTransactionInput: FilterTransactionInput,
   ) {
-    const res = await this.prismaService.transaction.findMany({
+    return await this.prismaService.transaction.findMany({
       skip: paginationInput.skip,
       take: paginationInput.take,
       where: {
@@ -37,8 +37,6 @@ export class TransactionsRepository {
         category: true,
       },
     });
-    console.log(res);
-    return res;
   }
 
   findOne(id: string) {
