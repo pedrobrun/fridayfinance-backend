@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PaginationInput } from 'src/shared/pagination.dto';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { FilterTransactionInput } from './dto/filter-transaction.input';
+import { UpdateTransactionInput } from './dto/update-transaction.input';
 import { TransactionsRepository } from './transactions.repository';
 
 @Injectable()
@@ -26,5 +27,9 @@ export class TransactionsService {
 
   findOne(id: string) {
     return this.transactionsRepository.findOne(id);
+  }
+
+  updateOne(id: string, updateTransactionInput: UpdateTransactionInput) {
+    return this.transactionsRepository.updateOne(id, updateTransactionInput);
   }
 }

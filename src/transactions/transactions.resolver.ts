@@ -6,6 +6,7 @@ import { PaginationInput } from 'src/shared/pagination.dto';
 import { FilterTransactionInput } from './dto/filter-transaction.input';
 import { TransactionWithCategory } from './entities/transaction-with-categories.entity';
 import { TransactionWithCategoryAndAccount } from './entities/transaction-with-category-and-account.entity';
+import { UpdateTransactionInput } from './dto/update-transaction.input';
 
 @Resolver(() => Transaction)
 export class TransactionsResolver {
@@ -38,5 +39,16 @@ export class TransactionsResolver {
   })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.transactionsService.findOne(id);
+  }
+
+  @Mutation(() => TransactionWithCategoryAndAccount)
+  updateTransaction(
+    @Args('updateTransactionInput')
+    updateTransactionInput: UpdateTransactionInput,
+    @Args('id', { type: () => String }) id: string,
+  ) {
+    console.log('updateTransactionInput', updateTransactionInput);
+    console.log('id', id);
+    return this.transactionsService.updateOne(id, updateTransactionInput);
   }
 }

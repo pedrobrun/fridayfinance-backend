@@ -76,9 +76,9 @@ input FilterTransactionInput {
 
 type Mutation {
   createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
+  updateTransaction(updateTransactionInput: UpdateTransactionInput!, id: String!): TransactionWithCategoryAndAccount!
   createAccount(createAccountInput: CreateAccountInput!): Account!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
-  updateOne(updateCategoryInput: UpdateCategoryInput!, id: String!): Category!
 }
 
 input CreateTransactionInput {
@@ -91,6 +91,15 @@ input CreateTransactionInput {
   date: DateTime!
 }
 
+input UpdateTransactionInput {
+  accountId: String
+  categoryId: String
+  reference: String
+  amount: Float
+  currency: String
+  date: DateTime
+}
+
 input CreateAccountInput {
   id: String!
   name: String!
@@ -99,11 +108,6 @@ input CreateAccountInput {
 
 input CreateCategoryInput {
   id: String!
-  name: String!
-  color: String!
-}
-
-input UpdateCategoryInput {
   name: String!
   color: String!
 }

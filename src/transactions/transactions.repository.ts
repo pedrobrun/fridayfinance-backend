@@ -3,6 +3,7 @@ import { PaginationInput } from 'src/shared/pagination.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { FilterTransactionInput } from './dto/filter-transaction.input';
+import { UpdateTransactionInput } from './dto/update-transaction.input';
 
 @Injectable()
 export class TransactionsRepository {
@@ -46,6 +47,13 @@ export class TransactionsRepository {
         category: true,
         account: true,
       },
+    });
+  }
+
+  updateOne(id: string, updateTransactionInput: UpdateTransactionInput) {
+    return this.prismaService.transaction.update({
+      where: { id },
+      data: updateTransactionInput,
     });
   }
 }

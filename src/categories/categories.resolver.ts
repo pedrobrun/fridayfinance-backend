@@ -24,12 +24,4 @@ export class CategoriesResolver {
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.categoriesService.findOne(id);
   }
-
-  @Mutation(() => Category)
-  updateOne(
-    @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
-    @Args('id', { type: () => String }) id: string,
-  ) {
-    return this.categoriesService.updateOne(id, updateCategoryInput);
-  }
 }
