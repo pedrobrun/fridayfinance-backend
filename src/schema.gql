@@ -40,9 +40,21 @@ type Account {
   bank: String!
 }
 
+type TransactionWithCategoryAndAccount {
+  id: String!
+  accountId: String!
+  categoryId: String
+  reference: String
+  amount: Float!
+  currency: String!
+  date: DateTime!
+  category: Category
+  account: Category
+}
+
 type Query {
   transactions(pagination: PaginationInput!, filter: FilterTransactionInput): [TransactionWithCategory!]!
-  transaction(id: String!): Transaction
+  transaction(id: String!): TransactionWithCategoryAndAccount
   accounts: [Account!]!
   account(id: String!): Account
   categories: [Category!]!

@@ -40,6 +40,12 @@ export class TransactionsRepository {
   }
 
   findOne(id: string) {
-    return this.prismaService.transaction.findUnique({ where: { id } });
+    return this.prismaService.transaction.findUnique({
+      where: { id },
+      include: {
+        category: true,
+        account: true,
+      },
+    });
   }
 }

@@ -4,7 +4,8 @@ import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { PaginationInput } from 'src/shared/pagination.dto';
 import { FilterTransactionInput } from './dto/filter-transaction.input';
-import { TransactionWithCategory } from './entities/transactions-with-categories.entity';
+import { TransactionWithCategory } from './entities/transaction-with-categories.entity';
+import { TransactionWithCategoryAndAccount } from './entities/transaction-with-category-and-account.entity';
 
 @Resolver(() => Transaction)
 export class TransactionsResolver {
@@ -31,7 +32,10 @@ export class TransactionsResolver {
     );
   }
 
-  @Query(() => Transaction, { name: 'transaction', nullable: true })
+  @Query(() => TransactionWithCategoryAndAccount, {
+    name: 'transaction',
+    nullable: true,
+  })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.transactionsService.findOne(id);
   }
