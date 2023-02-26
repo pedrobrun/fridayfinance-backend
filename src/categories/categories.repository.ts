@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
@@ -8,7 +9,12 @@ export class CategoriesRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   create(createCategoryInput: CreateCategoryInput) {
-    return this.prismaService.category.create({ data: createCategoryInput });
+    return this.prismaService.category.create({
+      data: {
+        id: createCategoryInput.id ?? randomUUID(),
+        ...createCategoryInput,
+      },
+    });
   }
 
   findAll() {

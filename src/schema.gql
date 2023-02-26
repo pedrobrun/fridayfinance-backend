@@ -96,7 +96,7 @@ input CreateAccountInput {
 }
 
 input CreateCategoryInput {
-  id: String!
+  id: String
   name: String!
   color: String!
 }

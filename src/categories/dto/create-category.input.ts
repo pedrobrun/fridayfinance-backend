@@ -3,7 +3,7 @@ import { Category } from '../entities/category.entity';
 
 @InputType()
 export class CreateCategoryInput implements Category {
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   id: string;
 
   @Field(() => String)
