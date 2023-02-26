@@ -41,8 +41,8 @@ export class TransactionsRepository {
     const cursor = after ? { id: after } : undefined;
 
     const transactions = await this.prismaService.transaction.findMany({
-      take: take + 1, // Fetch one extra item to check if there are more items after this page
-      skip: 1, // skip the cursor
+      take: take ? take + 1 : undefined, // Fetch one extra item to check if there are more items after this page
+      skip: cursor ? 1 : undefined, // skip the cursor
       cursor,
       where,
       include: {

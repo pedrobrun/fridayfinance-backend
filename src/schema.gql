@@ -47,7 +47,7 @@ type PageInfo {
 }
 
 type PaginatedReturn {
-  edges: [TransactionWithCategoryAndAccount!]!
+  edges: [TransactionWithCategoryAndAccount!]
   pageInfo: PageInfo!
 }
 
@@ -61,7 +61,7 @@ type Query {
 }
 
 input PaginationInput {
-  take: Int!
+  take: Int
   after: String
 }
 

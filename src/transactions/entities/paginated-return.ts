@@ -4,7 +4,7 @@ import { TransactionWithCategoryAndAccount } from './transaction-with-category-a
 
 @ObjectType()
 export class PaginatedReturn {
-  @Field(() => [TransactionWithCategoryAndAccount])
+  @Field(() => [TransactionWithCategoryAndAccount], { nullable: true })
   edges: TransactionWithCategoryAndAccount[];
 
   @Field(() => PageInfo)
