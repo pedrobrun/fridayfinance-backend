@@ -36,6 +36,7 @@ export class TransactionsRepository {
       },
       include: {
         category: true,
+        account: true,
       },
     });
   }

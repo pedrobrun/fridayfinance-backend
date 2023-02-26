@@ -20,7 +20,7 @@ export class TransactionsResolver {
     return this.transactionsService.create(createTransactionInput);
   }
 
-  @Query(() => [TransactionWithCategory], { name: 'transactions' })
+  @Query(() => [TransactionWithCategoryAndAccount], { name: 'transactions' })
   findAll(
     @Args('pagination')
     paginationInput: PaginationInput,

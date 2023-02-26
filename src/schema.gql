@@ -17,27 +17,16 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Category {
-  id: String!
-  name: String!
-  color: String!
-}
-
-type TransactionWithCategory {
-  id: String!
-  accountId: String!
-  categoryId: String
-  reference: String
-  amount: Float!
-  currency: String!
-  date: DateTime!
-  category: Category
-}
-
 type Account {
   id: String!
   name: String!
   bank: String!
+}
+
+type Category {
+  id: String!
+  name: String!
+  color: String!
 }
 
 type TransactionWithCategoryAndAccount {
@@ -53,7 +42,7 @@ type TransactionWithCategoryAndAccount {
 }
 
 type Query {
-  transactions(pagination: PaginationInput!, filter: FilterTransactionInput): [TransactionWithCategory!]!
+  transactions(pagination: PaginationInput!, filter: FilterTransactionInput): [TransactionWithCategoryAndAccount!]!
   transaction(id: String!): TransactionWithCategoryAndAccount
   accounts: [Account!]!
   account(id: String!): Account
