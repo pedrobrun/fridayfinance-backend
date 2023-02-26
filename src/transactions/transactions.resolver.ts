@@ -4,7 +4,6 @@ import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionInput } from './dto/create-transaction.input';
 import { PaginationInput } from 'src/shared/pagination.dto';
 import { FilterTransactionInput } from './dto/filter-transaction.input';
-import { TransactionWithCategory } from './entities/transaction-with-categories.entity';
 import { TransactionWithCategoryAndAccount } from './entities/transaction-with-category-and-account.entity';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
 
