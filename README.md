@@ -1,4 +1,4 @@
-## Friiday Finance Challenge's Backend using [Nest](https://github.com/nestjs/nest).
+# Friday Finance Backend
 
 <br/>
 
