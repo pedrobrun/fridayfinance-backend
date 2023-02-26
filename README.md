@@ -1,7 +1,5 @@
 # Friday Finance Backend
 
-<br/>
-
 ## Steps to run the app:
 
 ### (Optional) 1. Edit `.env.example` variables:
