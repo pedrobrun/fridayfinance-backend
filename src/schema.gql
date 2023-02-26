@@ -41,8 +41,18 @@ type TransactionWithCategoryAndAccount {
   account: Category
 }
 
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+}
+
+type PaginatedReturn {
+  edges: [TransactionWithCategoryAndAccount!]!
+  pageInfo: PageInfo!
+}
+
 type Query {
-  transactions(pagination: PaginationInput!, filter: FilterTransactionInput): [TransactionWithCategoryAndAccount!]!
+  transactions(pagination: PaginationInput!, filter: FilterTransactionInput): PaginatedReturn!
   transaction(id: String!): TransactionWithCategoryAndAccount
   accounts: [Account!]!
   account(id: String!): Account
@@ -51,8 +61,8 @@ type Query {
 }
 
 input PaginationInput {
-  skip: Int! = 0
-  take: Int! = 25
+  take: Int!
+  after: String
 }
 
 input FilterTransactionInput {

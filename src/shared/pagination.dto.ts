@@ -4,11 +4,10 @@ import { Max, Min } from 'class-validator';
 @InputType()
 export class PaginationInput {
   @Field(() => Int)
-  @Min(0)
-  skip = 0;
-
-  @Field(() => Int)
   @Min(1)
   @Max(50)
-  take = 25;
+  take: number;
+
+  @Field(() => String, { nullable: true })
+  after: string;
 }
