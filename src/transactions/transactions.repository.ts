@@ -30,8 +30,16 @@ export class TransactionsRepository {
           mode: 'insensitive',
         },
         date: {
-          gte: filterTransactionInput?.startDate,
-          lte: filterTransactionInput?.endDate,
+          gte:
+            !filterTransactionInput?.startDate ||
+            isNaN(filterTransactionInput?.startDate.getTime())
+              ? undefined
+              : filterTransactionInput?.startDate,
+          lte:
+            !filterTransactionInput?.endDate ||
+            isNaN(filterTransactionInput?.endDate.getTime())
+              ? undefined
+              : filterTransactionInput?.endDate,
         },
       },
       include: {
