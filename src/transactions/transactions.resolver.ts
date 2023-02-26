@@ -47,8 +47,6 @@ export class TransactionsResolver {
     updateTransactionInput: UpdateTransactionInput,
     @Args('id', { type: () => String }) id: string,
   ) {
-    console.log('updateTransactionInput', updateTransactionInput);
-    console.log('id', id);
     return this.transactionsService.updateOne(id, updateTransactionInput);
   }
 }
