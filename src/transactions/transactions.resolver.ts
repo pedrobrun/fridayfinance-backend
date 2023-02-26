@@ -6,6 +6,7 @@ import { PaginationInput } from 'src/shared/pagination.dto';
 import { FilterTransactionInput } from './dto/filter-transaction.input';
 import { TransactionWithCategoryAndAccount } from './entities/transaction-with-category-and-account.entity';
 import { UpdateTransactionInput } from './dto/update-transaction.input';
+import { PaginatedReturn } from './entities/paginated-return';
 
 @Resolver(() => Transaction)
 export class TransactionsResolver {
@@ -19,8 +20,8 @@ export class TransactionsResolver {
     return this.transactionsService.create(createTransactionInput);
   }
 
-  @Query(() => [TransactionWithCategoryAndAccount], { name: 'transactions' })
-  findAll(
+  @Query(() => PaginatedReturn, { name: 'transactions' })
+  async findAll(
     @Args('pagination')
     paginationInput: PaginationInput,
     @Args('filter', { nullable: true })

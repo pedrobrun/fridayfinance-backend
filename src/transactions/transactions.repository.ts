@@ -19,34 +19,48 @@ export class TransactionsRepository {
     paginationInput: PaginationInput,
     filterTransactionInput: FilterTransactionInput,
   ) {
-    return await this.prismaService.transaction.findMany({
-      skip: paginationInput.skip,
-      take: paginationInput.take,
-      where: {
-        accountId: filterTransactionInput?.accountId,
-        categoryId: filterTransactionInput?.categoryId,
-        reference: {
-          contains: filterTransactionInput?.reference,
-          mode: 'insensitive',
-        },
-        date: {
-          gte:
-            !filterTransactionInput?.startDate ||
-            isNaN(filterTransactionInput?.startDate.getTime())
-              ? undefined
-              : filterTransactionInput?.startDate,
-          lte:
-            !filterTransactionInput?.endDate ||
-            isNaN(filterTransactionInput?.endDate.getTime())
-              ? undefined
-              : filterTransactionInput?.endDate,
-        },
+    const { take, after } = paginationInput;
+
+    const where = {
+      accountId: filterTransactionInput?.accountId,
+      categoryId: filterTransactionInput?.categoryId,
+      date: {
+        gte:
+          !filterTransactionInput?.startDate ||
+          isNaN(filterTransactionInput?.startDate.getTime())
+            ? undefined
+            : filterTransactionInput?.startDate,
+        lte:
+          !filterTransactionInput?.endDate ||
+          isNaN(filterTransactionInput?.endDate.getTime())
+            ? undefined
+            : filterTransactionInput?.endDate,
       },
+    };
+
+    const cursor = after ? { id: after } : undefined;
+
+    const transactions = await this.prismaService.transaction.findMany({
+      take: take ? take + 1 : undefined, // Fetch one extra item to check if there are more items after this page
+      skip: cursor ? 1 : undefined, // skip the cursor
+      cursor,
+      where,
       include: {
         category: true,
         account: true,
       },
     });
+
+    const hasNextPage = transactions.length > take;
+    const edges = hasNextPage ? transactions.slice(0, -1) : transactions;
+
+    return {
+      edges,
+      pageInfo: {
+        endCursor: hasNextPage ? edges[edges.length - 1].id : null,
+        hasNextPage,
+      },
+    };
   }
 
   findOne(id: string) {
