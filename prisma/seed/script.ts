@@ -41,7 +41,7 @@ export async function batchCreateTransactions(reqs, limit) {
 
 (async () => {
   if (!Number(batchRequestsLimit) || Number(batchRequestsLimit) <= 0) {
-    throw 'process.env.SEED_BATCH_REQUESTS_LIMIT must be a number greather than 0';
+    throw 'process.env.SEED_BATCH_REQUESTS_LIMIT must be a number greater than 0';
   }
 
   try {
